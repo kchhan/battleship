@@ -1,17 +1,10 @@
-const Ship = (() => {
+const Ship = (name, length, location) => {
   const props = {
-    length: undefined,
-    location: [],
+    name,
+    length,
+    location,
     hit: [],
     sunk: false,
-  };
-
-  const setLength = num => {
-    return (props.length = num);
-  };
-
-  const setLocation = ([...arr]) => {
-    return (props.location = arr);
   };
 
   const hit = coordinate => {
@@ -19,12 +12,19 @@ const Ship = (() => {
   };
 
   const isSunk = () => {
-    return (props.hit = props.location) && (props.length = props.hit.length)
+    // Sorts location and hit array numerically so it can be parsed into a string and compared.
+    const hitValues = props.hit.sort((a, b) => {
+      return a - b;
+    });
+    const locationValues = props.location.sort((a, b) => {
+      return a - b;
+    });
+    return JSON.stringify(hitValues) === JSON.stringify(locationValues)
       ? (props.sunk = true)
       : (props.sunk = false);
   };
 
-  return { props, setLength, setLocation, hit, isSunk };
-})();
+  return { props, hit, isSunk };
+};
 
 export default Ship;

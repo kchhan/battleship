@@ -1,6 +1,6 @@
 import Ship from '../modules/Ship';
 
-const Gameboard = (() => {
+const Gameboard = () => {
   const props = {
     shipsLeft: 5,
     ships: [],
@@ -8,20 +8,21 @@ const Gameboard = (() => {
   };
 
   const createShip = (name, length, location) => {
-    const ship = Ship;
-    ship.props.name = name;
-    ship.setLength(length);
-    ship.setLocation(location);
+    const ship = Ship(name, length, location);
     return props.ships.push(ship);
   };
 
   const receiveAttack = coordinate => {
+    let missed = false;
     props.ships.forEach(obj => {
       if (obj.props.location.includes(coordinate)) {
-        return obj.props.hit.push(coordinate);
+        obj.props.hit.push(coordinate);
+        missed = true;
       }
-      return props.missedShots.push(coordinate);
     });
+    if (!missed) {
+      props.missedShots.push(coordinate);
+    }
   };
 
   const checkSunk = () => {
@@ -31,12 +32,9 @@ const Gameboard = (() => {
         props.shipsLeft--;
       }
     });
-    if ((props.shipsLeft = 0)) {
-      return 'gameover';
-    }
   };
 
   return { props, createShip, receiveAttack, checkSunk };
-})();
+};
 
 export default Gameboard;
