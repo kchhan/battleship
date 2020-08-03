@@ -5,13 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "author": "Kevin Chhan",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.10.5",
+    "@babel/plugin-transform-modules-amd": "^7.10.5",
+    "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
+    "babel-jest": "^26.2.1",
     "babel-loader": "^8.1.0",
     "jest": "^26.1.0",
     "webpack": "^4.44.0",
