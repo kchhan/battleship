@@ -1,4 +1,4 @@
-import Ship from '../modules/Ship';
+import Ship from './Ship';
 
 const Gameboard = () => {
   const props = {

@@ -1,17 +1,23 @@
-const Player = (() => {
-  const computerMoves = [];
-  const userMoves = [];
+const Player = () => {
+  const moves = [];
 
   const randomMove = () => {
     const coordinate = Math.floor(Math.random() * 100);
-    computerMoves.push(coordinate);
-    return coordinate;
+    if(!moves.includes(coordinate)){
+      moves.push(coordinate)
+      return coordinate;
+    }
+    return randomMove();
   };
 
-  const userAttack = coordinate => {
-    userMoves.push(coordinate);
+  const userMove = coordinate => {
+    if (!moves.includes(coordinate)) {
+      moves.push(coordinate);
+      return coordinate;
+    }
   };
-  return { computerMoves, userMoves, randomMove, userAttack };
-})();
+
+  return { moves, randomMove, userMove };
+};
 
 export default Player;

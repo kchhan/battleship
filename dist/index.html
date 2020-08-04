@@ -3,9 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
     <title>Battleship</title>
   </head>
   <body>
+    <header id="header">
+      <h1>Battleship</h1>
+      <a href="https://github.com/kchhan" target="_blank"
+        ><button id="github"><i class="fab fa-github"></i>GitHub</button></a
+      >
+    </header>
+    <main id="main-container">
+      <div id="labels">
+        <div id="user-label">Your Grid</div>
+        <div id="computer-label">Opponent's Grid</div>
+      </div>
+      <section id="container"></section>
+      <button id="reset-button">Reset</button>
+    </main>
     <script src="bundle.js"></script>
   </body>
 </html>
