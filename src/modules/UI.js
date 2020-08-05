@@ -2,8 +2,9 @@ const UI = (() => {
   const UISelectors = {
     startBtn: '#start-button',
     container: '#container',
-    userBoard: '#user-board',
-    computerBoard: '#computer-board',
+    userGrid: '#user-grid',
+    computerGrid: '#computer-grid',
+    resetBtn: '#reset-button',
   };
 
   const $ = element => {
@@ -23,11 +24,11 @@ const UI = (() => {
         const cell = document.createElement('div');
         cell.id = i + 1;
         cell.classList.add('grid-item');
-        cell.textContent = i+1;
+        cell.textContent = i + 1;
         grid.appendChild(cell);
       }
 
-      $(UISelectors.container).appendChild(grid)
+      $(UISelectors.container).appendChild(grid);
     },
 
     getSelectors() {

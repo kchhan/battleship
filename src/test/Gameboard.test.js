@@ -28,7 +28,7 @@ describe('Gameboard can recieve attack from opponent', () => {
   });
 });
 
-describe('Gameboard tracks number of ships remaining unsunk', () => {
+describe('Gameboard checksunk method', () => {
   test('reports when all ships are sunk', () => {
     const playerBoard = Gameboard();
     playerBoard.props.shipsLeft = 1;
@@ -37,5 +37,25 @@ describe('Gameboard tracks number of ships remaining unsunk', () => {
     playerBoard.receiveAttack(3);
     playerBoard.checkSunk();
     expect(playerBoard.props.shipsLeft).toEqual(0);
+  });
+
+  test('returns gameover when no ships are left', () => {
+    const playerBoard = Gameboard();
+    playerBoard.props.shipsLeft = 1;
+    playerBoard.createShip('patrol boat', 2, [2, 3]);
+    playerBoard.receiveAttack(2);
+    playerBoard.receiveAttack(3);
+    playerBoard.checkSunk();
+    expect(playerBoard.props.gameover).toBe(true);
+  });
+
+  test('filters out sunk ships', () => {
+    const playerBoard = Gameboard();
+    playerBoard.props.shipsLeft = 1;
+    playerBoard.createShip('patrol boat', 2, [2, 3]);
+    playerBoard.receiveAttack(2);
+    playerBoard.receiveAttack(3);
+    playerBoard.checkSunk();
+    expect(playerBoard.props.ships.length).toBe(0);
   });
 });

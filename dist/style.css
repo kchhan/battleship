@@ -17,10 +17,15 @@ body {
 
 h1 {
   font-size: 2.5rem;
+  margin-top: 15px;
 }
 
 #github {
   font-size: 1.2rem;
+}
+
+button {
+  cursor: pointer;
 }
 
 /* grid labels */
@@ -51,7 +56,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid var(--border-color);
-  margin: 10px 50px 50px 0px;
+  margin: 10px 50px 30px 0px;
 }
 
 .grid-item {
@@ -60,6 +65,10 @@ h1 {
   border: 1px solid var(--grid-item-color);
   font-size: 0.6rem;
   color: rgba(0, 0, 0, 0.25);
+}
+
+#computer-grid {
+  cursor: pointer;
 }
 
 /* reset */
