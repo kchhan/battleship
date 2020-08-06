@@ -1,6 +1,10 @@
 :root {
   --border-color: #bbb;
   --grid-item-color: #cdd;
+  --ship-color: rgba(48, 209, 88, 0.5);
+  --miss-color: rgba(10, 132, 255, 0.5);
+  --hit-color: rgba(255, 159, 10, 0.5);
+  --sunk-color: rgba(255, 69, 58, 0.5);
 }
 
 * {
@@ -69,6 +73,23 @@ button {
 
 #computer-grid {
   cursor: pointer;
+}
+
+/* ship styles */
+.ship {
+  background-color: var(--ship-color);
+}
+
+.miss {
+  background-color: var(--miss-color);
+}
+
+.hit {
+  background-color: var(--hit-color);
+}
+
+.sunk {
+  background-color: var(--sunk-color);
 }
 
 /* reset */

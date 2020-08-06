@@ -24,27 +24,27 @@ const Gameboard = () => {
     if (!missed) {
       props.missedShots.push(coordinate);
     }
+    return !missed ? 'miss' : 'hit';
   };
 
   const checkSunk = () => {
-    // should filter out sunk ships so not counted twice
-    
-    // const filteredShips = props.ships.filter(ship => {
-    //   ship.props.sunk = false;
-    //   console.log(ship.props.sunk)
-    // })
-    // console.log(filteredShips)
-    props.ships.forEach(obj => {
+    // should filter out already sunk ships so not counted twice
+    const filteredShips = props.ships.filter(ship => {
+      if (!ship.props.sunk) {
+        return ship;
+      }
+    });
+
+    filteredShips.forEach(obj => {
+      // then checks for sunk ships from current move
       obj.isSunk();
       if (obj.props.sunk) {
         props.shipsLeft--;
-        
       }
     });
     if (props.shipsLeft === 0) {
       return (props.gameover = true);
     }
-    
   };
 
   return { props, createShip, receiveAttack, checkSunk };

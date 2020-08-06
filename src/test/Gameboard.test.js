@@ -48,14 +48,4 @@ describe('Gameboard checksunk method', () => {
     playerBoard.checkSunk();
     expect(playerBoard.props.gameover).toBe(true);
   });
-
-  test('filters out sunk ships', () => {
-    const playerBoard = Gameboard();
-    playerBoard.props.shipsLeft = 1;
-    playerBoard.createShip('patrol boat', 2, [2, 3]);
-    playerBoard.receiveAttack(2);
-    playerBoard.receiveAttack(3);
-    playerBoard.checkSunk();
-    expect(playerBoard.props.ships.length).toBe(0);
-  });
 });

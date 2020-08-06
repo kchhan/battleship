@@ -2,7 +2,7 @@ import Player from './modules/Player';
 import Gameboard from './modules/Gameboard';
 import UI from './modules/UI';
 
-const App = (UI => {
+const App = (() => {
   const user = Player();
   const computer = Player();
   const userBoard = Gameboard();
@@ -20,23 +20,26 @@ const App = (UI => {
       .addEventListener('click', resetGame);
   };
 
-  const playGame = e => {
-    if (e.target.className.includes('grid-item')) {
-      console.log(e.target.id);
+  const playGame = (e, coordinate) => {
+    if (e.target.classList.contains('grid-item')) {
+      coordinate = Number(e.target.id);
     }
 
-    const coordinate = e.target.id;
-
     if (!userBoard.props.gameover || !computerBoard.props.gameover) {
-      userMove(Number(coordinate));
+      userMove(coordinate);
       setTimeout(computerMove, 100);
+    } else {
+      console.log('gameover');
     }
   };
 
   const userMove = coordinate => {
-    user.userMove(coordinate);
-    computerBoard.receiveAttack(coordinate);
-    computerBoard.checkSunk();
+    if (!user.moves.includes(coordinate)) {
+      user.userMove(coordinate);
+      console.log(coordinate);
+      computerBoard.receiveAttack(coordinate);
+      computerBoard.checkSunk();
+    }
   };
 
   const computerMove = () => {
@@ -71,13 +74,19 @@ const App = (UI => {
     computerBoard.createShip('destroyer', 2, [49, 50]);
   };
 
-  const renderShips = () => {};
+  const renderShips = () => {
+    UI.renderUserShips(userBoard.props.ships);
+  };
 
-  const clearBoard = () => {};
+  const clearBoard = () => {
+    UI.clearBoard();
+  };
 
   const resetGame = () => {
     user.moves = [];
     computer.moves = [];
+
+    newGame();
   };
 
   return {

@@ -12,7 +12,7 @@ const Ship = (name, length, location) => {
   };
 
   const isSunk = () => {
-    // Sorts location and hit array numerically so it can be parsed into a string and compared.
+    // Sorts location and hit array numerically so it can be parsed into JSON and compared.
     const hitValues = props.hit.sort((a, b) => {
       return a - b;
     });

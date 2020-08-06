@@ -1,6 +1,5 @@
 const UI = (() => {
   const UISelectors = {
-    startBtn: '#start-button',
     container: '#container',
     userGrid: '#user-grid',
     computerGrid: '#computer-grid',
@@ -29,6 +28,25 @@ const UI = (() => {
       }
 
       $(UISelectors.container).appendChild(grid);
+    },
+
+    renderUserShips(shipList) {
+      const grid = $(UISelectors.userGrid);
+      shipList.forEach(ship => {
+        ship.props.location.forEach(cell => {
+          grid.children[cell - 1].classList.add('ship');
+        });
+      });
+    },
+
+    missShip() {},
+
+    hitShip() {},
+
+    sinkShip() {},
+
+    clearBoard() {
+      $(UISelectors.container).innerHTML = '';
     },
 
     getSelectors() {
