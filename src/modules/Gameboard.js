@@ -14,17 +14,18 @@ const Gameboard = () => {
   };
 
   const receiveAttack = coordinate => {
-    let missed = false;
+    let hit = false;
     props.ships.forEach(obj => {
       if (obj.props.location.includes(coordinate)) {
         obj.props.hit.push(coordinate);
-        missed = true;
+        hit = true;
       }
     });
-    if (!missed) {
+    if (!hit) {
       props.missedShots.push(coordinate);
     }
-    return !missed ? 'miss' : 'hit';
+    // returns a response for updateGrid
+    return !hit ? 'miss' : 'hit';
   };
 
   const checkSunk = () => {
@@ -42,12 +43,20 @@ const Gameboard = () => {
         props.shipsLeft--;
       }
     });
+    // if no ships are left then it is gameover and there is a winner
     if (props.shipsLeft === 0) {
       return (props.gameover = true);
     }
   };
 
-  return { props, createShip, receiveAttack, checkSunk };
+  const clearGameboard = () => {
+    props.shipsLeft = 5;
+    props.ships = [];
+    props.missedShots = [];
+    props.gameover = false;
+  };
+
+  return { props, createShip, receiveAttack, checkSunk, clearGameboard };
 };
 
 export default Gameboard;

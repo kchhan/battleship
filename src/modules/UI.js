@@ -4,12 +4,15 @@ const UI = (() => {
     userGrid: '#user-grid',
     computerGrid: '#computer-grid',
     resetBtn: '#reset-button',
+    announcement: '#announcement',
   };
 
+  // for brevity
   const $ = element => {
     return document.querySelector(element);
   };
 
+  // game traditionally 10x10
   const rows = 10;
   const cols = 10;
 
@@ -30,6 +33,7 @@ const UI = (() => {
       $(UISelectors.container).appendChild(grid);
     },
 
+    // rendering only the user's ships as per normal game rules
     renderUserShips(shipList) {
       const grid = $(UISelectors.userGrid);
       shipList.forEach(ship => {
@@ -39,11 +43,72 @@ const UI = (() => {
       });
     },
 
-    missShip() {},
+    // adds a miss or hit class to the grid-item to change its color
+    updateGrid(player, coordinate, response) {
+      switch (player) {
+        case 'user':
+          $(UISelectors.userGrid).children[coordinate - 1].classList.add(
+            response
+          );
+          break;
+        case 'computer':
+          $(UISelectors.computerGrid).children[coordinate - 1].classList.add(
+            response
+          );
+          break;
+      }
+    },
 
-    hitShip() {},
+    // if ship is sunk it will turn red
+    updateSunk(player, shipList) {
+      switch (player) {
+        case 'user':
+          shipList.forEach(ship => {
+            if (ship.props.sunk) {
+              ship.props.location.forEach(location => {
+                $(UISelectors.userGrid).children[location - 1].classList.remove(
+                  'hit'
+                );
+                $(UISelectors.userGrid).children[location - 1].classList.add(
+                  'sunk'
+                );
+              });
+            }
+          });
+          break;
+        case 'computer':
+          shipList.forEach(ship => {
+            if (ship.props.sunk) {
+              ship.props.location.forEach(location => {
+                $(UISelectors.computerGrid).children[
+                  location - 1
+                ].classList.remove('hit');
+                $(UISelectors.computerGrid).children[
+                  location - 1
+                ].classList.add('sunk');
+              });
+            }
+          });
+          break;
+      }
+    },
 
-    sinkShip() {},
+    announceWinner(winner) {
+      let text = '';
+      switch (winner) {
+        case 'user':
+          text += 'YOU WIN';
+          break;
+        case 'computer':
+          text += 'COMPUTER WINS';
+          break;
+      }
+      $(UISelectors.announcement).textContent = text;
+    },
+
+    clearAnnouncement() {
+      $(UISelectors.announcement).innerHTML = '';
+    },
 
     clearBoard() {
       $(UISelectors.container).innerHTML = '';
