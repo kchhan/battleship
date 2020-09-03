@@ -77,19 +77,98 @@ const App = ((UI, Player, Gameboard) => {
     UI.renderGrid('computer-grid');
   };
 
-  // predetermined ship coordinates
+  // randomly chosen predetermined ship coordinates
   const generateShips = () => {
-    userBoard.createShip('carrier', 5, [37, 47, 57, 67, 77]);
-    userBoard.createShip('battleship', 4, [14, 15, 16, 17]);
-    userBoard.createShip('cruiser', 3, [53, 63, 73]);
-    userBoard.createShip('submarine', 3, [88, 89, 90]);
-    userBoard.createShip('destroyer', 2, [21, 31]);
+    const userId = Math.floor(Math.random() * 3) + 1;
+    const computerId = Math.floor(Math.random() * 3) + 1;
 
-    computerBoard.createShip('carrier', 5, [12, 13, 14, 15, 16]);
-    computerBoard.createShip('battleship', 4, [95, 96, 97, 98]);
-    computerBoard.createShip('cruiser', 3, [35, 45, 55]);
-    computerBoard.createShip('submarine', 3, [61, 71, 81]);
-    computerBoard.createShip('destroyer', 2, [49, 50]);
+    const userArr = [
+      {
+        id: 1,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [37, 47, 57, 67, 77],
+          [14, 15, 16, 17],
+          [53, 63, 73],
+          [88, 89, 90],
+          [21, 31],
+        ],
+      },
+      {
+        id: 2,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [81, 82, 83, 84, 85],
+          [29, 39, 49, 59],
+          [77, 87, 97],
+          [12, 13, 14],
+          [7, 17],
+        ],
+      },
+      {
+        id: 3,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [56, 57, 58, 59, 60],
+          [71, 72, 73, 74],
+          [19, 29, 39],
+          [12, 22, 32],
+          [99, 100],
+        ],
+      },
+    ];
+
+    const computerArr = [
+      {
+        id: 1,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [12, 13, 14, 15, 16],
+          [95, 96, 97, 98],
+          [35, 45, 55],
+          [61, 71, 81],
+          [49, 50],
+        ],
+      },
+      {
+        id: 2,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [60, 70, 80, 90, 100],
+          [13, 23, 33, 43],
+          [58, 59, 60],
+          [45, 55, 65],
+          [28, 29],
+        ],
+      },
+      {
+        id: 3,
+        length: [5, 4, 3, 3, 2],
+        coordinates: [
+          [8, 18, 28, 38, 48],
+          [64, 65, 66, 67],
+          [91, 92, 93],
+          [12, 22, 32],
+          [79, 89],
+        ],
+      },
+    ];
+
+    userArr.forEach((obj) => {
+      if (userId === obj.id) {
+        for (let i = 0; i < 5; i++) {
+          userBoard.createShip(obj.length[i], obj.coordinates[i]);
+        }
+      }
+    });
+
+    computerArr.forEach((obj) => {
+      if (computerId === obj.id) {
+        for (let i = 0; i < 5; i++) {
+          computerBoard.createShip(obj.length[i], obj.coordinates[i]);
+        }
+      }
+    });
   };
 
   const renderShips = () => {

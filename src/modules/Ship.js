@@ -1,13 +1,12 @@
-const Ship = (name, length, location) => {
+const Ship = (length, location) => {
   const props = {
-    name,
     length,
     location,
     hit: [],
     sunk: false,
   };
 
-  const hit = coordinate => {
+  const hit = (coordinate) => {
     return props.hit.push(coordinate);
   };
 

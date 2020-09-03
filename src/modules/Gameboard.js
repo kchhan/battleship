@@ -8,8 +8,8 @@ const Gameboard = () => {
     gameover: false,
   };
 
-  const createShip = (name, length, location) => {
-    const ship = Ship(name, length, location);
+  const createShip = (length, location) => {
+    const ship = Ship(length, location);
     return props.ships.push(ship);
   };
 
