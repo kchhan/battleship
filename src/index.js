@@ -46,7 +46,7 @@ const App = ((UI, Player, Gameboard) => {
   };
 
   // first checks if valid move then updates UI;
-  const userMove = coordinate => {
+  const userMove = (coordinate) => {
     if (!user.moves.includes(coordinate)) {
       user.userMove(coordinate);
       const response = computerBoard.receiveAttack(coordinate);
@@ -101,7 +101,7 @@ const App = ((UI, Player, Gameboard) => {
   };
 
   // winner is determined in playGame
-  const gameover = winner => {
+  const gameover = (winner) => {
     UI.announceWinner(winner);
   };
 
@@ -121,6 +121,7 @@ const App = ((UI, Player, Gameboard) => {
   return {
     init() {
       newGame();
+      resetGame();
     },
   };
 })(UI, Player, Gameboard);
