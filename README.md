@@ -30,7 +30,6 @@ Live Site: https://kchhan.github.io/battleship/dist/index.html
 
 - A smarter AI that can determine if it has hit or sunk a ship
 - Ability to click and drag ships to change location before game start
-  - Alternatively have several predetermined location sets for both player and CPU
 - Implement 2-player mode
 
 ---
