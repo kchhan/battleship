@@ -199,7 +199,6 @@ const App = ((UI, Player, Gameboard) => {
 
   return {
     init() {
-      newGame();
       resetGame();
     },
   };
