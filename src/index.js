@@ -1,6 +1,6 @@
-import Player from './modules/Player';
-import Gameboard from './modules/Gameboard';
-import UI from './modules/UI';
+import Player from "./modules/Player";
+import Gameboard from "./modules/Gameboard";
+import UI from "./modules/UI";
 
 const App = ((UI, Player, Gameboard) => {
   const user = Player();
@@ -16,22 +16,26 @@ const App = ((UI, Player, Gameboard) => {
     // can press button to start game
     document
       .querySelector(UISelectors.startBtn)
-      .addEventListener('click', startGame);
+      .addEventListener("click", startGame);
 
     // computerGrid is the only playable area
     document
       .querySelector(UISelectors.computerGrid)
-      .addEventListener('click', playGame);
+      .addEventListener("click", playGame);
 
     document
       .querySelector(UISelectors.resetBtn)
-      .addEventListener('click', resetGame);
+      .addEventListener("click", resetGame);
   };
 
   const startGame = () => {
-    if (!currentGame) {
+    if (
+      !currentGame &&
+      !userBoard.props.gameover &&
+      !computerBoard.props.gameover
+    ) {
       currentGame = true;
-      UI.announcement('game start');
+      UI.announcement("game start");
       setTimeout(UI.clearAnnouncement, 4000);
     }
   };
@@ -39,25 +43,25 @@ const App = ((UI, Player, Gameboard) => {
   // user goes first and computer moves after
   const playGame = (e, coordinate) => {
     if (currentGame) {
-      if (e.target.classList.contains('grid-item')) {
+      if (e.target.classList.contains("grid-item")) {
         coordinate = Number(e.target.id);
       }
 
       if (!userBoard.props.gameover && !computerBoard.props.gameover) {
         if (
-          !e.target.classList.contains('hit') &&
-          !e.target.classList.contains('miss') &&
-          !e.target.classList.contains('sunk')
+          !e.target.classList.contains("hit") &&
+          !e.target.classList.contains("miss") &&
+          !e.target.classList.contains("sunk")
         ) {
           userMove(coordinate);
           setTimeout(computerMove, 100);
         }
       }
       if (userBoard.props.gameover) {
-        gameover('computer');
+        gameover("computer");
       }
       if (computerBoard.props.gameover) {
-        gameover('user');
+        gameover("user");
       }
     }
   };
@@ -68,8 +72,8 @@ const App = ((UI, Player, Gameboard) => {
       user.userMove(coordinate);
       const response = computerBoard.receiveAttack(coordinate);
       computerBoard.checkSunk();
-      UI.updateGrid('computer', coordinate, response);
-      UI.updateSunk('computer', computerBoard.props.ships);
+      UI.updateGrid("computer", coordinate, response);
+      UI.updateSunk("computer", computerBoard.props.ships);
     }
   };
 
@@ -77,8 +81,8 @@ const App = ((UI, Player, Gameboard) => {
     const coordinate = computer.randomMove();
     const response = userBoard.receiveAttack(coordinate);
     userBoard.checkSunk();
-    UI.updateGrid('user', coordinate, response);
-    UI.updateSunk('user', userBoard.props.ships);
+    UI.updateGrid("user", coordinate, response);
+    UI.updateSunk("user", userBoard.props.ships);
   };
 
   const newGame = () => {
@@ -90,8 +94,8 @@ const App = ((UI, Player, Gameboard) => {
   };
 
   const renderBoards = () => {
-    UI.renderGrid('user-grid');
-    UI.renderGrid('computer-grid');
+    UI.renderGrid("user-grid");
+    UI.renderGrid("computer-grid");
   };
 
   // randomly chosen predetermined ship coordinates
