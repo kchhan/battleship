@@ -3,12 +3,13 @@ const UI = (() => {
     container: '#container',
     userGrid: '#user-grid',
     computerGrid: '#computer-grid',
+    startBtn: '#start-button',
     resetBtn: '#reset-button',
     announcement: '#announcement',
   };
 
   // for brevity
-  const $ = element => {
+  const $ = (element) => {
     return document.querySelector(element);
   };
 
@@ -36,8 +37,8 @@ const UI = (() => {
     // rendering only the user's ships as per normal game rules
     renderUserShips(shipList) {
       const grid = $(UISelectors.userGrid);
-      shipList.forEach(ship => {
-        ship.props.location.forEach(cell => {
+      shipList.forEach((ship) => {
+        ship.props.location.forEach((cell) => {
           grid.children[cell - 1].classList.add('ship');
         });
       });
@@ -63,9 +64,9 @@ const UI = (() => {
     updateSunk(player, shipList) {
       switch (player) {
         case 'user':
-          shipList.forEach(ship => {
+          shipList.forEach((ship) => {
             if (ship.props.sunk) {
-              ship.props.location.forEach(location => {
+              ship.props.location.forEach((location) => {
                 $(UISelectors.userGrid).children[location - 1].classList.remove(
                   'hit'
                 );
@@ -77,9 +78,9 @@ const UI = (() => {
           });
           break;
         case 'computer':
-          shipList.forEach(ship => {
+          shipList.forEach((ship) => {
             if (ship.props.sunk) {
-              ship.props.location.forEach(location => {
+              ship.props.location.forEach((location) => {
                 $(UISelectors.computerGrid).children[
                   location - 1
                 ].classList.remove('hit');
@@ -93,7 +94,7 @@ const UI = (() => {
       }
     },
 
-    announceWinner(winner) {
+    announcement(winner) {
       let text = '';
       switch (winner) {
         case 'user':
@@ -102,6 +103,8 @@ const UI = (() => {
         case 'computer':
           text += 'COMPUTER WINS';
           break;
+        case 'game start': 
+          text += 'GAME START!'
       }
       $(UISelectors.announcement).textContent = text;
     },

@@ -8,8 +8,15 @@ const App = ((UI, Player, Gameboard) => {
   const userBoard = Gameboard();
   const computerBoard = Gameboard();
 
+  let currentGame = false;
+
   const loadEventListeners = () => {
     const UISelectors = UI.getSelectors();
+
+    // can press button to start game
+    document
+      .querySelector(UISelectors.startBtn)
+      .addEventListener('click', startGame);
 
     // computerGrid is the only playable area
     document
@@ -21,27 +28,37 @@ const App = ((UI, Player, Gameboard) => {
       .addEventListener('click', resetGame);
   };
 
+  const startGame = () => {
+    if (!currentGame) {
+      currentGame = true;
+      UI.announcement('game start');
+      setTimeout(UI.clearAnnouncement, 4000);
+    }
+  };
+
   // user goes first and computer moves after
   const playGame = (e, coordinate) => {
-    if (e.target.classList.contains('grid-item')) {
-      coordinate = Number(e.target.id);
-    }
-
-    if (!userBoard.props.gameover && !computerBoard.props.gameover) {
-      if (
-        !e.target.classList.contains('hit') &&
-        !e.target.classList.contains('miss') &&
-        !e.target.classList.contains('sunk')
-      ) {
-        userMove(coordinate);
-        setTimeout(computerMove, 100);
+    if (currentGame) {
+      if (e.target.classList.contains('grid-item')) {
+        coordinate = Number(e.target.id);
       }
-    }
-    if (userBoard.props.gameover) {
-      gameover('computer');
-    }
-    if (computerBoard.props.gameover) {
-      gameover('user');
+
+      if (!userBoard.props.gameover && !computerBoard.props.gameover) {
+        if (
+          !e.target.classList.contains('hit') &&
+          !e.target.classList.contains('miss') &&
+          !e.target.classList.contains('sunk')
+        ) {
+          userMove(coordinate);
+          setTimeout(computerMove, 100);
+        }
+      }
+      if (userBoard.props.gameover) {
+        gameover('computer');
+      }
+      if (computerBoard.props.gameover) {
+        gameover('user');
+      }
     }
   };
 
@@ -79,44 +96,7 @@ const App = ((UI, Player, Gameboard) => {
 
   // randomly chosen predetermined ship coordinates
   const generateShips = () => {
-    const userId = Math.floor(Math.random() * 3) + 1;
     const computerId = Math.floor(Math.random() * 3) + 1;
-
-    const userArr = [
-      {
-        id: 1,
-        length: [5, 4, 3, 3, 2],
-        coordinates: [
-          [37, 47, 57, 67, 77],
-          [14, 15, 16, 17],
-          [53, 63, 73],
-          [88, 89, 90],
-          [21, 31],
-        ],
-      },
-      {
-        id: 2,
-        length: [5, 4, 3, 3, 2],
-        coordinates: [
-          [81, 82, 83, 84, 85],
-          [29, 39, 49, 59],
-          [77, 87, 97],
-          [12, 13, 14],
-          [7, 17],
-        ],
-      },
-      {
-        id: 3,
-        length: [5, 4, 3, 3, 2],
-        coordinates: [
-          [56, 57, 58, 59, 60],
-          [71, 72, 73, 74],
-          [19, 29, 39],
-          [12, 22, 32],
-          [99, 100],
-        ],
-      },
-    ];
 
     const computerArr = [
       {
@@ -136,7 +116,7 @@ const App = ((UI, Player, Gameboard) => {
         coordinates: [
           [60, 70, 80, 90, 100],
           [13, 23, 33, 43],
-          [58, 59, 60],
+          [57, 58, 59],
           [45, 55, 65],
           [28, 29],
         ],
@@ -154,14 +134,6 @@ const App = ((UI, Player, Gameboard) => {
       },
     ];
 
-    userArr.forEach((obj) => {
-      if (userId === obj.id) {
-        for (let i = 0; i < 5; i++) {
-          userBoard.createShip(obj.length[i], obj.coordinates[i]);
-        }
-      }
-    });
-
     computerArr.forEach((obj) => {
       if (computerId === obj.id) {
         for (let i = 0; i < 5; i++) {
@@ -169,6 +141,13 @@ const App = ((UI, Player, Gameboard) => {
         }
       }
     });
+
+    // user ships can be clicked and dragged to change coordinates... hope to add feature soon
+    userBoard.createShip(5, [37, 47, 57, 67, 77]);
+    userBoard.createShip(4, [14, 15, 16, 17]);
+    userBoard.createShip(3, [53, 63, 73]);
+    userBoard.createShip(3, [88, 89, 90]);
+    userBoard.createShip(2, [21, 31]);
   };
 
   const renderShips = () => {
@@ -181,7 +160,8 @@ const App = ((UI, Player, Gameboard) => {
 
   // winner is determined in playGame
   const gameover = (winner) => {
-    UI.announceWinner(winner);
+    UI.announcement(winner);
+    currentGame = false;
   };
 
   // resets both Players and Gameboards
@@ -193,6 +173,7 @@ const App = ((UI, Player, Gameboard) => {
     computerBoard.clearGameboard();
 
     UI.clearAnnouncement();
+    currentGame = false;
 
     newGame();
   };
